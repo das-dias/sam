@@ -1,3 +1,23 @@
+Metadata-Version: 2.2
+Name: sampex
+Version: 0.1.0
+Summary: A simple coplanar electrical channel crosstalk extractor for Samuel.
+Author-email: Diogo Andre <ddias@tudelft.nl>
+Project-URL: Homepage, https://github.com/das-dias/sampex
+Project-URL: Repository, https://github.com/das-dias/sampex.git
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: docopt
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: pydantic
+Requires-Dist: pydantic_yaml
+Requires-Dist: matplotlib
+Requires-Dist: rich
+Requires-Dist: pyyaml
+Requires-Dist: pyspice
+Requires-Dist: ruff
+
 # Sam
 
 `A simple coplanar metal stripline electrical cross-talk 2.5D extractor.`
@@ -7,7 +27,7 @@
 ### Using `pip`
 
 ```sh 
-$pip install sampex
+$pip install sam
 ```
 ### Binaries:
 

@@ -1,0 +1,10 @@
+docopt
+numpy
+scipy
+pydantic
+pydantic_yaml
+matplotlib
+rich
+pyyaml
+pyspice
+ruff

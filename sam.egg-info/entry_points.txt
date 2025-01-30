@@ -1,0 +1,2 @@
+[console_scripts]
+sam = sam.__main__:main
