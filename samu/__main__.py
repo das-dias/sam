@@ -2,7 +2,7 @@
 A simple coplanar metal stripline electrical cross-talk 2.5D extractor.
 
 Usage:
-  sam <setup.yaml> [-g] [-r] [-v]
+  samu <setup.yaml> [-g] [-r] [-v]
 
 Options:
   -g --gui   Enable GUI mode

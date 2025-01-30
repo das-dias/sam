@@ -7,5 +7,5 @@ python -m pip install venv
 python -m venv .venv
 .venv\Scripts\Activate.ps1
 # Install the 'sam' package
-python -m pip install sam
-python -m sam
+python -m pip install samu
+python -m samu

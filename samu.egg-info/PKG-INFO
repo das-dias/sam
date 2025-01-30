@@ -1,10 +1,10 @@
 Metadata-Version: 2.2
-Name: sampex
+Name: samu
 Version: 0.1.0
 Summary: A simple coplanar electrical channel crosstalk extractor for Samuel.
 Author-email: Diogo Andre <ddias@tudelft.nl>
-Project-URL: Homepage, https://github.com/das-dias/sampex
-Project-URL: Repository, https://github.com/das-dias/sampex.git
+Project-URL: Homepage, https://github.com/das-dias/samu
+Project-URL: Repository, https://github.com/das-dias/samu.git
 Requires-Python: >=3.7
 Description-Content-Type: text/markdown
 Requires-Dist: docopt
