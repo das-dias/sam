@@ -1,4 +1,4 @@
-# Sam
+# Samu
 
 `A simple coplanar metal stripline electrical cross-talk 2.5D extractor.`
 
@@ -7,22 +7,15 @@
 ### Using `pip`
 
 ```sh 
-$pip install sampex
-```
-### Binaries:
-
-There are two available binaries that you can directly download from this repo:
-
-1. samwin - Windows .exe executable.
-
-2. samnix - .nix systems executable. 
+$pip install samu
+``` 
 
 # Usage
 
 The tool requires two input YAML files:
 
 ```sh
-sam example_setup.yml -g
+samu example_setup.yml -g
 ```
 
 The input setup file contains a description of the dielectric emersing the coplanar metal strips and the geometry of the setup:
