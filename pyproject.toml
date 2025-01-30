@@ -1,13 +1,13 @@
 [project]
 name = "samu"
-version = "0.1.0"
+version = "0.1.2"
 description = "A simple coplanar electrical channel crosstalk extractor for Samuel."
 authors = [
     { name = "Diogo Andre", email = "ddias@tudelft.nl" }
 ]
 license = { file = "LICENSE" }
 dependencies = [
-    "docopt",
+    "click",
     "numpy",
     "scipy",
     "pydantic",
@@ -26,10 +26,10 @@ Homepage = "https://github.com/das-dias/samu"
 Repository = "https://github.com/das-dias/samu.git"
 
 [project.scripts]
-sam = "samu.__main__:main"
+samu = "samu:cli"
 
 [tool.setuptools]
-packages = ["samu"]
+packages = ["src"]
 
 [build-system]
 requires = ["setuptools", "wheel"]

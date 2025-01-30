@@ -1,0 +1,1 @@
+from .samu import cli

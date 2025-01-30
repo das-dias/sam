@@ -1,17 +1,18 @@
-"""
-A simple coplanar metal stripline electrical cross-talk 2.5D extractor.
+__doc__ = """Usage: samu.py [-vgrh] FILE
 
-Usage:
-  samu <setup.yaml> [-g] [-r] [-v]
+Arguments:
+  FILE  input file
 
 Options:
-  -g --gui   Enable GUI mode
-  -r         Extract resistance
-  -h --help  Show this help message
-  -v         Show verbose results.
+  -h --help
+  -v  verbose mode
+  -r  extract resistance
+  -g  gui mode
+
 """
 
-from docopt import docopt
+import click
+
 from pathlib import Path
 from typing import Type, Dict, Tuple, Optional
 from enum import Enum
@@ -318,7 +319,7 @@ class Extractor25D(BaseModel):
             self.geometry = Geometry(**setup_yaml["geometry"])
         return self
 
-    def extract(self, extract_r: bool = False) -> Dict[str, Result]:
+    def extract(self, extract_resistance: bool = False) -> Dict[str, Result]:
         from scipy.constants import mu_0, epsilon_0, pi
         from numpy import log
         # based on https://www.emisoftware.com/calculator/ - it has 7% error due to the negligence of thickness in face of width and length
@@ -395,29 +396,30 @@ class Extractor25D(BaseModel):
                 * log(2 * (1 + aspect_number**0.5) / (1 - aspect_number**0.5))
             )
 
-        if extract_r:
+        if extract_resistance:
             self.results.resistance = (
                 self.materials[metal_name]["resistivity"] * length / (width * thickness)
             )
 
         return self.results
 
-
-def main():
+@click.command()
+@click.argument('setup_file')
+@click.option('--gui', help='GUI mode')
+@click.option('--verbose', help="verbose mode")
+@click.option('--resistance', help="extract resistance")
+def cli(setup_file, gui, verbose, resistance):
     from rich.pretty import pprint
     from datetime import datetime
-
-    arguments = docopt(__doc__)
-    setup_file = Path(arguments["<setup.yaml>"])
-    enable_gui = arguments["--gui"]
-    enable_r = arguments["-r"]
-    enable_i = arguments["-i"]
-    verbose = arguments["-v"]
+    
+    
+    assert setup_file, "Provide an input file."
+    setup_file = Path(setup_file)
     assert setup_file.exists, FileExistsError(f"{setup_file}")
     print(f"Reading setup file: {setup_file}...")
 
     extractor = Extractor25D().setup(setup_file)
-    results: Results = extractor.extract(enable_r, enable_i)
+    results: Results = extractor.extract(resistance)
 
     if verbose:
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -425,12 +427,8 @@ def main():
         pprint(results)
     print("Done :-)")
 
-    if enable_gui:
+    if gui:
         results.show()
         extractor.geometry.show()
         
     exit(0)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,6 +1,6 @@
+LICENSE
 README.md
 pyproject.toml
-samu/__main__.py
 samu.egg-info/PKG-INFO
 samu.egg-info/SOURCES.txt
 samu.egg-info/dependency_links.txt

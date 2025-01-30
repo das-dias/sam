@@ -1,9 +1,0 @@
-README.md
-pyproject.toml
-sampex/__main__.py
-sampex.egg-info/PKG-INFO
-sampex.egg-info/SOURCES.txt
-sampex.egg-info/dependency_links.txt
-sampex.egg-info/entry_points.txt
-sampex.egg-info/requires.txt
-sampex.egg-info/top_level.txt
