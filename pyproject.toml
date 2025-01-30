@@ -1,0 +1,36 @@
+[project]
+name = "sam"
+version = "0.1.0"
+description = "A simple coplanar electrical channel crosstalk extractor for Samuel."
+authors = [
+    { name = "Diogo Andre", email = "ddias@tudelft.nl" }
+]
+license = { file = "LICENSE" }
+dependencies = [
+    "docopt",
+    "numpy",
+    "scipy",
+    "pydantic",
+    "pydantic_yaml",
+    "matplotlib",
+    "rich",
+    "pyyaml",
+    "pyspice",
+    "ruff"
+]
+readme = "README.md"
+requires-python = ">=3.7"
+
+[project.urls]
+Homepage = "https://github.com/das-dias/sam"
+Repository = "https://github.com/das-dias/sam.git"
+
+[project.scripts]
+sam = "sam.__main__:main"
+
+[tool.setuptools]
+packages = ["sam"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
