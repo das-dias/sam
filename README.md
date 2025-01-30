@@ -7,7 +7,7 @@
 ### Using `pip`
 
 ```sh 
-$pip install sam
+$pip install sampex
 ```
 ### Binaries:
 
