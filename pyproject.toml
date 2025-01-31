@@ -1,6 +1,6 @@
 [project]
 name = "samu"
-version = "0.1.3"
+version = "0.1.4"
 description = "A simple coplanar electrical channel crosstalk extractor for Samuel."
 authors = [
     { name = "Diogo Andre", email = "ddias@tudelft.nl" }

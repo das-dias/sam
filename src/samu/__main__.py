@@ -394,7 +394,6 @@ class Extractor25D(BaseModel):
         rel_permitivity = self.materials[dieletric_name]["rel_permittivity"]
         
         c = 1 / sqrt(mu_0 * epsilon_0)
-        print(c)
         aspect_number = separation / (separation + 2 * width)
 
         self.results = Results()
