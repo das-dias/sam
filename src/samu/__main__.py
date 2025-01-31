@@ -250,21 +250,34 @@ class AttackerVictimCrossTalkModel(SubCircuitFactory):
         self.C(1, "attacker", "victim", Cp)
         self.L(1, "attacker", "victim", Lp)
 
+class TransientWaveType(Enum):
+    SQUARE = "square"
+    SINUSOID = "sinusoid"
+
 @yaml_parsable
 class TransientSimulationConfig(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
+    
     v1: float = 0 @ u_V
     v2: float = 1 @ u_V
-    t1: float = 1 @ u_ns
-    t2: float = 10 @ u_us
+    delay: Optional[float] = None #1 @ u_ns
+    duty_cycle: Optional[float] = 0.5
     temperature: float = 25
     nominal_temperature: float = 25
     step_time: float = 1e-11  # s
-    end_time: float = 1e-6  # s
-
+    end_time: float = 10e-6  # s
+    frequency: float = 4@u_MHz # 4 MHz
+    wave_type: TransientWaveType = TransientWaveType.SINUSOID
+    
+    @field_validator("wave_type", mode="before")
+    @classmethod
+    def validate_wave_type(cls, v):
+        if isinstance(v, str):
+            return TransientWaveType(v)
+        return v
+    
 
 _default_transient_sim_config = TransientSimulationConfig()
-
 
 @yaml_parsable
 class Results(BaseModel):
@@ -283,15 +296,27 @@ class Results(BaseModel):
         logger = Logging.setup_logging()
         pprint(_default_transient_sim_config)
         testbench = Circuit("Crosstalk Testbench")
-        testbench.PulseVoltageSource(
-            "pulse",
-            "input",
-            testbench.gnd,
-            sim_config.v1,
-            sim_config.v2,
-            sim_config.t1,
-            sim_config.t2,
-        )
+        
+        if sim_config.wave_type is TransientWaveType.SQUARE:
+            tclk = 1/sim_config.frequency
+            testbench.PulseVoltageSource(
+                "pulse",
+                "input",
+                testbench.gnd,
+                initial_value=sim_config.v1,
+                pulsed_value=sim_config.v2,
+                pulse_width=tclk*sim_config.duty_cycle,
+                period=tclk,
+            )
+        else:
+            testbench.SinusoidalVoltageSource(
+                "sinusoid",
+                "input",
+                testbench.gnd,
+                amplitude=sim_config.v2,
+                frequency=sim_config.frequency
+            )
+
         testbench.subcircuit(
             AttackerVictimCrossTalkModel(
                 Rs=self.resistance,
@@ -327,7 +352,7 @@ class Results(BaseModel):
         ax.set_title(f"Crosstalk = 20*log10(RMS[victim] / RMS[input]) = {cross_talk_input:.1f} dB")
         ax.set_xlabel("Timesamples [s]")
         ax.set_ylabel("Voltage (V)")
-        ax.set_xlim(0, 1000)
+        #ax.set_xlim(0, 1000)
         ax.grid()
         ax.legend(["input", "attacker", "victim"], loc="upper right")
         fig.tight_layout()
@@ -343,6 +368,7 @@ class Extractor25D(BaseModel):
     materials: MaterialsDict | None = None
     geometry: Geometry | None = None
     results: Results | None = None
+    transient_simulation_config: TransientSimulationConfig = _default_transient_sim_config
 
     def setup(self, file_path: UrlPath) -> "Extractor25D":
         with open(file_path, "r") as ymlfp:
@@ -367,6 +393,7 @@ class Extractor25D(BaseModel):
                 "Exactly 1 dielectric and 1 metal are required for extracting more than capacitive parasitics."
             )
             self.geometry = Geometry(**setup_yaml["geometry"])
+            self.transient_simulation_config = TransientSimulationConfig(**setup_yaml["transient_simulation"])
         return self
 
     def extract(self, extract_resistance: bool = False) -> Dict[str, Result]:
@@ -399,7 +426,6 @@ class Extractor25D(BaseModel):
         self.results = Results()
 
         self.results.self_inductance = 0.0
-
         
         aux1 = 1 - aspect_number**2
         
@@ -466,7 +492,7 @@ def cli(setup_file, gui, verbose, resistance):
     print("Done :-)")
 
     if gui:
-        results.show()
+        results.show(extractor.transient_simulation_config)
         extractor.geometry.show()
         
     exit(0)

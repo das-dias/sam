@@ -1,0 +1,23 @@
+materials:
+  poliomide:
+    material_type: dielectric
+    rel_permittivity: 3.3
+    rel_permeability: 1.0
+
+  copper:
+    material_type: metal
+    resistivity: 1.68e-8 # Ohm.m
+
+geometry:
+  units: micro
+  metal_width: 20.0
+  metal_thickness: 0.5
+  separation: 20.0
+  strip_length: 3e4 # 3 cm
+
+transient_simulation:
+  wave_type: square
+  v2: 1.0 # amplitude
+  frequency: 4e6 # 4 MHz
+  step_time: 1e-11 # s - simulator time-step
+  end_time: 1e-6  # s
