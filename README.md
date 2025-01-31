@@ -12,7 +12,7 @@ $pip install samu
 
 # Usage
 
-The tool requires two input YAML files:
+The tool requires a single input YAML file:
 
 ```sh
 samu example_setup.yml -g
