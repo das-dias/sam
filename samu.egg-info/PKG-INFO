@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: samu
-Version: 0.1.2
+Version: 0.1.3
 Summary: A simple coplanar electrical channel crosstalk extractor for Samuel.
 Author-email: Diogo Andre <ddias@tudelft.nl>
 License: Copyright (c) 2025 TU Delft
