@@ -31,10 +31,10 @@ and then check installation (because with Windows, you never know...)
 pyspice-post-installation --check-install
 ```
 
-### Using `pip`
+### Install tool using `pip`
 
 ```sh 
-$pip install samu
+pip install samu
 ``` 
 
 # Usage
