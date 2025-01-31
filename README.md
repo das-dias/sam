@@ -4,6 +4,33 @@
 
 # Install
 
+### PySpice and NgSpice
+
+This tool's GUI relies on PySpice Python lib. and the NgSpice open source SPICE simulator for generating accurate lumped-element circuit model simulations of the channel crosstalk between coplanar strips.
+
+For that, it is required to install [NgSpice](https://pyspice.fabrice-salvaire.fr/releases/v1.5/installation.html). 
+
+On MacOS using Homebrew:
+
+```sh
+brew install libngspice
+```
+
+On Linux:
+```sh
+sudo apt install libngspice0
+```
+
+On Windows:
+```sh
+pyspice-post-installation --install-ngspice-dll
+```
+and then check installation (because with Windows, you never know...)
+
+```sh
+pyspice-post-installation --check-install
+```
+
 ### Using `pip`
 
 ```sh 
